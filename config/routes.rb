@@ -1,4 +1,16 @@
 Linkstore::Application.routes.draw do
+    
+  post "user/create"
+
+  post "session/login"
+  get "session/authorized"
+
+  get "links/index"
+
+  match '' => 'default#index'
+  match '/links' => 'links#index'
+  match '/link/:id' => 'links#get'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

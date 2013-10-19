@@ -8,7 +8,147 @@
 </head>
 <body>
 
-<%= yield %>
+    <script type="text/x-handlebars" data-template-name="application">
+
+        <nav class="top-bar">
+            <ul class="title-area">
+
+                <li class="name">
+                    <h1><a href="/">Link Store</a></h1>
+                </li>
+            </ul>
+
+          
+            <section class="top-bar-section">
+            <% if current_user %>
+                <ul class="left">
+                    <li class="divider"></li>
+                    <li>{{#linkTo "links"}}Last added{{/linkTo}}</a>
+
+                    </li>
+                    <li class="divider"></li>
+                </ul>
+            <% end %>
+                <!-- Right Nav Section
+                <ul class="right">
+                  <li class="divider hide-for-small"></li>
+                  <li class=""><a href="#">Login</a></li>
+                </ul>
+                -->
+              </section>
+        </nav>
+
+        <div class="container main-container">{{outlet}}</div>
+
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="links">
+
+        <div class="row">
+        <div class="small-2 large-12 columns">
+
+            <h1 class="subheader">Latest links</h1>
+
+            <div class="row links-list">
+              
+            {{#each link in model}}
+                <div class="small-2 large-4 columns">
+                    <div class="panel">
+                        <h4>{{#linkTo ""}}{{link.title}}{{/linkTo}}</h4>
+
+                        <p class="desc">{{link.description}}</p>
+                        <p>{{#linkTo "link" link class="small button"}}Read text{{/linkTo}}</p>
+                    </div>
+                </div>
+            {{/each}}
+              
+            </div>
+
+        </div>
+
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="link">
+
+        <div class="frame">
+            <iframe {{bindAttr src="link"}}></iframe>
+        </div>
+        
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="index">
+    <div class="row">
+        <div class="small-6 large-8 columns">
+
+            <h1 class="subheader">Examples</h1>
+
+            <div class="row links-list">
+              <div class="small-2 large-6 columns">
+
+                <div class="panel">
+                        <h4>{{#linkTo ""}}przykładowy tytuł{{/linkTo}}</h4>
+
+                        <p class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec erat elit, molestie a nunc eget, sodales consequat ante. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
+                        <p>{{#linkTo "" class="small button"}}Read text{{/linkTo}}</p>
+                </div>
+
+              </div>
+              <div class="small-4 large-6 columns">
+
+                <div class="panel">
+                    
+                    <h4>{{#linkTo ""}}kolejny przykładowy tytuł{{/linkTo}}</h4>
+
+                    <p class="desc">Sed nec odio sit amet quam faucibus feugiat. Nam sodales eros nibh, sed lobortis nunc vulputate pharetra. In at augue gravida, pretium dolor vel, varius neque. Sed vitae nisl mi. Pellentesque laoreet quam a consequat facilisis. </p>
+
+                    <p>{{#linkTo "" class="small button"}}Read text{{/linkTo}}</p>
+                    
+                </div>
+
+              </div>
+            
+            </div>
+
+        </div>
+        <div class="small-6 large-4 columns">
+
+            <div class="panel panel-success">
+
+                <h5>Sign In</h5>
+     
+
+                {{#if loginFailed}}
+                    <div class="div alert-box alert">Invalid email or password.</div>
+                {{/if}}
+
+                {{#if loginSucceed}}
+                    <div class="div alert-box success">You have been logged in.</div>
+                {{/if}}
+
+                {{#if isSlowConnection}}
+                    <div class="alert alert-box alert">The request seems to be taking more time than usual, please wait.</div>
+                  {{/if}}
+                
+                <form role="form" {{action "login" on="submit"}}>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Email</label>
+                        {{input value=user.email type="email" class="form-control"}}
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Password</label>
+                        {{input value=user.password type="password" class="form-control"}}
+                    </div>
+                    
+                    <button type="submit" class="small button" {{bindAttr disabled="isProcessing"}}>Sign In</button>
+                </form>
+
+
+            </div>
+
+        </div>
+    </div>
+    </script>
 
 </body>
 </html>
